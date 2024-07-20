@@ -1,0 +1,17 @@
+{
+    "name": "amqf/http-request-proxier",
+    "type": "library",
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "AMQF\\HttpRequestProxier\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Antônio M. Quadros Filho",
+            "email": "antoniomquadrosfilho@gmail.com"
+        }
+    ],
+    "require": {}
+}
