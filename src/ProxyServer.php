@@ -15,18 +15,14 @@ class ProxyServer
         $this->_requestParams = $_requestParams;
     }
 
-    /**
-     * @var int $n_times
-     * @var int $n_servers
-     */
-    public function execute(int $n_times, int $n_servers = 0)
+    public function execute(int $nTimes, int $nServers = 0) : void
     {
         echo __CLASS__ . ": Starting requests...\n";
-        $proxies = $this->_proxyRepository->getProxies($n_servers);
+        $proxies = $this->_proxyRepository->getProxies($nServers);
 
-        for ($i = 0; $i < $n_times; $i++) {
+        for ($i = 0; $i < $nTimes; $i++) {
 
-            if($n_servers === -1)
+            if($nServers === -1)
             {
                 $this->_requestHandler->execute($this->_requestParams);
             }

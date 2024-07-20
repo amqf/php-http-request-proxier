@@ -24,7 +24,7 @@ class RequestHandler
 
         if($proxyAttributes instanceof ProxyAttributes)
         {
-            sprintf("\tProxy %s:%s...\n", $proxyAttributes->getHost(), $proxyAttributes->getPort());
+            echo sprintf("\tProxy %s:%s...\n", $proxyAttributes->getHost(), $proxyAttributes->getPort());
             curl_setopt($ch, CURLOPT_PROXY, $proxyAttributes->getHost());
             curl_setopt($ch, CURLOPT_PROXYPORT, $proxyAttributes->getPort());
         }

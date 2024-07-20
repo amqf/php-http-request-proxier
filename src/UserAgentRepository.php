@@ -41,7 +41,6 @@ class UserAgentRepository
             throw new Exception("Não foi possível abrir o arquivo para escrita: " . $this->_filePath);
         }
 
-        // Adiciona o cabeçalho do CSV
         fputcsv($fp, ['Device Name', 'User Agent']);
 
         foreach ($userAgents as $userAgent) {

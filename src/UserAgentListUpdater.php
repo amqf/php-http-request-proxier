@@ -5,11 +5,18 @@ namespace AMQF\HttpRequestProxier;
 use DOMDocument;
 use DOMXPath;
 
+/**
+ * Broken Class
+ * I'm implementing it...
+ */
 class UserAgentListUpdater
 {
     private string $url = 'https://deviceatlas.com/blog/list-of-user-agent-strings';
 
-    public function __construct(private string $_filePath)
+    public function __construct(
+        private string $_filePath,
+        private UserAgentRepository $_userAgentRepository
+    )
     {
     }
 
@@ -52,5 +59,6 @@ class UserAgentListUpdater
     {
         $html = $this->downloadPage();
         $userAgents = $this->parseUserAgents($html);
+        $this->_userAgentRepository->update($this->_filePath, $userAgents);
     }
 }
