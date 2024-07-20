@@ -1,23 +1,33 @@
 # PHP HTTP REQUEST PROXIER
 
-It request a http web server N times with N proxy servers using a list.
+Used for request a http web server N times with N proxy servers using a proxy server list.
 
 ![Image](./image.png "Como funciona?")
+
+# Requeriments
+
+- git
+- PHP 8.3
+
+# Installation
+
+```
+$ git clone https://github.com/amqf/php-http-request-proxier
+```
 
 # Usage
 
 ```php
+use AMQF\HttpRequestProxier\ProxyListUpdater;
 use AMQF\HttpRequestProxier\ProxyRepository;
 use AMQF\HttpRequestProxier\ProxyServer;
 use AMQF\HttpRequestProxier\RequestHandler;
 use AMQF\HttpRequestProxier\RequestParams;
-use AMQF\HttpRequestProxier\ProxyListUpdater;
-use AMQF\HttpRequestProxier\UserAgentListUpdater;
-use AMQF\HttpRequestProxier\UserAgentRepository;
+
+const PROXY_LIST_CSV = './proxy.csv';
 
 $proxyRepository = new ProxyRepository(PROXY_LIST_CSV);
-$userAgentRepository = new UserAgentRepository(USER_AGENT_LIST_CSV);
-$userAgentListUpdater = new UserAgentListUpdater(USER_AGENT_LIST_CSV, $userAgentRepository);
+$proxyListUpdater = new ProxyListUpdater(PROXY_LIST_CSV, $proxyRepository);
 $requestParams = new RequestParams(
     '127.0.0.1:8080',
     'GET',
@@ -27,8 +37,17 @@ $requestParams = new RequestParams(
 $requestHandler = new RequestHandler();
 $proxyServer = new ProxyServer($proxyRepository, $requestHandler, $requestParams);
 
-// Execute a requisição 1 vezes, considerando -1 (nenhum proxy), 0 (todos os proxies), N proxies
-$proxyServer->execute(1, -1);
+$proxyServer->execute(
+    nTimes:1,
+
+    /*
+    * -1 - http request without proxy servers
+    * 0 - http request using all proxy servers
+    * 1 - http request using 1-th proxy server
+    * N - http request using the N-th proxy servers
+    */
+    nServers: 0 
+);
 ```
 
 ## Proxy Server List Updating
@@ -44,11 +63,12 @@ $proxyListUpdater->update();
 You may request the "Web Server Simulator" executing:
 
 ```php
-$ ./webserver_simulation.php
+$ php ./webserver_simulator.php
+// Servidor HTTP rodando em http://127.0.0.1:8080
 ```
 
-Change `RequestParams` `host` and `port` in `index.php` and it:
+Change `RequestParams` `host` and `port` in `index.php` and execute it:
 
 ```php
-$ php index.php
+$ php ./index.php
 ```
